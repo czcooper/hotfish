@@ -1,0 +1,174 @@
+$def with(mp,call_chains,put_chains,cv_lists,opurls_tuple,symb,current_expdate,short_name,maxcv)
+<link rel="stylesheet" href="templates/assets/css/table.css"/>
+
+
+<div class="am-container">
+  <div class="am-g am-g-fixed">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <p class="am-text-primary">this is box</p>
+    </div>
+  </div>
+</div>
+ 
+
+<div class="am-container">
+  <div class="am-g am-g-fixed">
+    <div class="am-u-sm-9 am-u-sm-centered am-u-lg-uncentered">
+    <table id="table-3" cellspacing="0" cellpadding="0" >
+        <tbody>
+          <tr>
+             <td>$symb</td><td>$short_name</td>
+          </tr>
+        </tbody>
+    </table>
+    <hr/>
+   </div>
+  </div>
+ </div> 
+ 
+<div class="am-container">
+  <div class="am-g am-g-fixed">
+    <div class="am-u-sm-9 am-u-sm-centered am-u-lg-uncentered">
+    <table id="table-3" cellspacing="0" cellpadding="0" >
+        <tbody>
+          <tr>
+             <td>Max Pain:</td><td><h1>$mp</h1></td><td>expDate:</td><td>$current_expdate</td>
+          </tr>
+         </tbody>
+    </table>
+       <div id="chart" style="float:left;">
+			           <canvas id="mpchart" width="750" height="400">
+			                Your web-browser does not support the HTML 5 canvas element.
+			           </canvas>
+	   </div>
+	 
+	 <table id="table-1" cellspacing="0" cellpadding="0" >
+        <tbody>
+          <tr>
+             <td>More Options:</td>
+          </tr>
+          
+          $for row in range(len(opurls_tuple)/8+1): 
+              <tr>
+              $for opurl in opurls_tuple[row*8:(row+1)*8]:
+                <td><a href="/omp?symb=$symb&expdate=$opurl[0]">$str(opurl[0])[2:] </td>
+              </tr>       
+        </tbody>
+     </table>  
+	
+    </div>
+   </div>
+</div>
+    
+<div class="am-container">
+ <div class="am-g am-g-fixed">
+  <div class="am-u-sm-9 am-u-sm-centered am-u-lg-uncentered"> 
+    <table id="table-1">
+    <tbody>
+        <tr style="background-color:#666666">Call options</tr>
+        <tr>
+           <td>Strike</td>
+           <td>Contract Name</td>
+           <td>Last</td>
+           <td>Bid</td>
+           <td>Ask</td>
+           <td>Change</td>
+           <td>%Change</td>
+           <td>Volume</td>
+           <td>Open Interest</td>
+           <td>Implied Volatility</td>
+         </tr>
+        $for chain in call_chains:
+          <tr>
+             <td>$chain['strike']</td>
+             <td>$chain['contract']</td>
+             <td>$chain['last']</td>
+             <td>$chain['bid']</td>
+             <td>$chain['ask']</td>
+             <td>$chain['change']</td>
+             <td>$str(chain['percentchange'])[:4] %</td>
+             <td>$chain['volume']</td>
+             <td>$chain['openinterest']</td>
+             <td>$chain['impliedvolatility']</td>
+          </tr>
+        
+    </tbody>
+    </table>    
+    <table id="table-2">
+    <tbody>
+        <tr style="background-color:#666666">Put options</tr>
+        <tr>
+           <td>Strike</td>
+           <td>Contract Name</td>
+           <td>Last</td>
+           <td>Bid</td>
+           <td>Ask</td>
+           <td>Change</td>
+           <td>%Change</td>
+           <td>Volume</td>
+           <td>Open Interest</td>
+           <td>Implied Volatility</td>
+         </tr>
+         
+        $for chain in put_chains:
+           <tr>
+             <td>$chain['strike']</td>
+             <td>$chain['contract']</td>
+             <td>$chain['last']</td>
+             <td>$chain['bid']</td>
+             <td>$chain['ask']</td>
+             <td>$chain['change']</td>
+             <td>$str(chain['percentchange'])[:4] %</td>
+             <td>$chain['volume']</td>
+             <td>$chain['openinterest']</td>
+             <td>$chain['impliedvolatility']</td>
+          </tr>
+        
+    </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+<script>	
+		var barChartData = {
+			labels : [],
+			datasets : [
+				{	
+					fillColor : "rgba(0,0,250,1)",
+					data : []
+				},
+				{
+					fillColor : "rgba(255,0,0,1)",
+					data : []
+				},
+				{
+					fillColor : "rgba(0,250,0,1)",
+					data : []
+				}
+			]
+		}
+		
+		
+	var max=$(maxcv*1.2)
+		
+		$for cv in cv_lists:
+		    barChartData.labels.push("$str(cv['uprice'])")
+			barChartData.datasets[0].data.push($cv['callvalue'])
+			barChartData.datasets[1].data.push($cv['putvalue'])
+			$if cv['uprice']==mp:
+			   barChartData.datasets[2].data.push(max)
+			$else:
+			   barChartData.datasets[2].data.push(0)
+			
+	
+	
+	var steps=10	
+	var myLine = new Chart(document.getElementById("mpchart").getContext("2d")).Bar(barChartData,{
+	                 scaleOverride:true,
+	                 scaleSteps:10,
+	                 scaleStepWidth:Math.ceil(max/steps),
+	                 scaleStartValue:0
+	});
+	
+	</script>        
+  

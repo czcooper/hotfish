@@ -1,0 +1,38 @@
+<p>
+
+
+
+
+
+<hr/>
+<div class="am-container ">
+      <div class="am-u-md-8 am-u-sm-centered">
+      <p>
+      <p>
+      <p>
+      <p>Success to login.</p>
+      <p>
+      After <span id="time" style="background:yellow" >10</span> seconds, you will go to home page.<a href="http://www.dadeinvest.com">Back to Home</a>  
+   </p>
+</div>
+
+<hr/>
+
+<script language="JavaScript1.2" type="text/javascript">  
+  
+function delayURL(url) {  
+ var delay = document.getElementById("time").innerHTML;//
+ if(delay > 0) {//
+ delay--;  
+  document.getElementById("time").innerHTML = delay;  
+ } else {  
+  window.top.location.href = url ;  
+ }  
+    setTimeout("delayURL('" + url + "')", 1000);  
+}  
+  
+</script> 
+
+<body onload="delayURL('http://www.dadeinvest.com')">
+
+</body>

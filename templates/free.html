@@ -1,0 +1,52 @@
+$def with (free_list)
+
+<div class="am-container">
+  <div class="am-g am-g-fixed">
+    <div class="am-u-sm-9 am-u-sm-centered am-u-lg-uncentered">
+      <p class="am-text-primary">this is box</p>
+    </div>
+  </div>
+
+
+  <div class="am-g am-g-fixed">
+    <div class="am-u-sm-9 am-u-sm-centered am-u-lg-uncentered">
+    <p>
+    <hr/>
+    <table id="table-2" cellspacing="0" cellpadding="0" >
+        <tbody>
+          <th>Free 30 popular</th>
+          <tr>
+             <td>You see this page is because you are not a member yet,as a guest,we provide you a total of 30 popular stocks option MP for free, see the table below.</p>
+              
+             <p>If you want to query all stocks maximum pain please <a target="_blank" href="/pricing">sign up</a> as a member or <a target="_blank" href="http://ucenter.dadeinvest.com/membership-login/">login</a>.</p>
+             </p>
+             <p>The following is free 30 popular option maximum pain.</p>
+             </td>
+             <td></td>
+          </tr>
+        </tbody>
+    </table>
+    <hr/>
+   </div>
+  </div>
+ 
+<p></p>
+  <div class="am-g am-g-fixed">
+    <div class="am-u-sm-9 am-u-sm-centered am-u-lg-uncentered">
+    <table class="am-table am-table-bordered am-table-striped am-table-hover">
+    <tbody>
+        <td>Company</td>
+        <td>Symb</td>
+        <td>Free real-time MP</td>
+        $for sym in free_list:
+        <tr class="am-active">
+            <td>$sym['name']</td>
+            <td>$sym['symb']</td>
+            <td><a target="_blank" href="/omp?symb=$sym['symb']">click to see</a></td>
+        </tr>
+    </tbody>
+    </table>
+    </div>
+  </div>
+
+</div>

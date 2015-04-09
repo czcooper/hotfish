@@ -1,0 +1,19 @@
+$def with(teststr)
+<html>
+  <head>
+    <title>{{error}} - test</title>
+  </head>
+  <body>
+      <h1>Hello, {{error}}! $teststr</h1>
+  </body>
+</html>
+
+<link type="text/css" href="templates/pricecss/styles.css" rel="stylesheet" media="all">
+
+<script type="text/javascript">
+ var obj=document.getElementById("tb");
+ for(var i=0;i<obj.rows.length;i++){  //循环表格行设置鼠标事件
+   obj.rows[i].onmouseover=function(){this.style.background="#0EF";}
+   obj.rows[i].onmouseout=function(){this.style.background="";}
+ }
+</script>
